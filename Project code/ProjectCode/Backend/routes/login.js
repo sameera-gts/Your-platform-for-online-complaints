@@ -1,0 +1,21 @@
+const express = require('express');
+const router = express.Router();
+const { Login, Sign,GetSession,Logout,getRoles,profileData,profileSetting,profileInfo,agentRoles} = require('../Controllers/Login');
+const { requestPasswordReset, verifyOtpAndResetPassword, verifyEmailOtp,verifyPassword,changePassword} = require('../Controllers/Vertify.email.otp');
+const {verifyToken}=require("../Controllers/Auth.webtoken");
+router.post('/login', Login);
+router.post('/register', Sign);
+router.get("/session",GetSession);
+router.post("/logout",Logout);
+router.get("/profile/info",verifyToken,profileInfo);
+router.get("/role",verifyToken,getRoles);
+router.post("/setting",verifyToken,profileSetting);
+router.post('/forgot-password', requestPasswordReset);
+router.post('/reset-password', verifyOtpAndResetPassword);
+router.post('/verify-email-otp', verifyEmailOtp);
+router.post('/password',verifyPassword);
+router.post('/changePassword',changePassword);
+router.get("/users/agents",agentRoles);
+//dashboardbased
+router.get("/das/profile",verifyToken,profileData);
+module.exports = router;
